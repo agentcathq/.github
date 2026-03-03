@@ -37,6 +37,11 @@ npm install mcpcat
 ```
 Checkout the [Typescript SDK here](https://github.com/mcpcat/mcpcat-typescript-sdk).
 
+```bash
+go get github.com/mcpcat/mcpcat-go-sdk
+```
+Checkout the [Go SDK here](https://github.com/mcpcat/mcpcat-go-sdk).
+
 Create an account for free today at [mcpcat.io](https://mcpcat.io).
 
 ## Why use MCPcat? 🤔
@@ -57,7 +62,7 @@ Use MCPcat for:
 |-----|---------|--------|
 | 🟦 [TypeScript](https://github.com/mcpcat/mcpcat-typescript-sdk) | MCP v1.0.0+| ✅ Available |
 | 🐍 [Python](https://github.com/mcpcat/mcpcat-python-sdk) | MCP v1.2.0+| ✅ Available |
-| 🐹 Go | - | 🚧 Roadmap |
+| 🐹 [Go](https://github.com/mcpcat/mcpcat-go-sdk) | mcp-go v0.44.0+ | ✅ Available |
 | ☕ Java | - | 🚧 Roadmap |
 
 ## Supported Observability Platforms
