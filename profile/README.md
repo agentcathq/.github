@@ -1,9 +1,5 @@
 <div align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="docs/static/logo-dark.svg">
-    <source media="(prefers-color-scheme: light)" srcset="docs/static/logo-light.svg">
-    <img alt="AgentCat Logo" src="docs/static/logo-light.svg" width="80%">
-  </picture>
+  <img alt="AgentCat — see exactly how agents experience your product" src="docs/static/og-image.png" width="80%">
 </div>
 <h3 align="center">
     <a href="#why-use-agentcat-">Features</a>
@@ -58,7 +54,7 @@ Use AgentCat for:
 - **Trace debugging** 🔍. See where your users are getting stuck, track and find when LLMs get confused by your API, and debug sessions across all deployments of your MCP server.
 - **Existing platform support** 📊. Get logging and tracing out of the box for your existing observability platforms (OpenTelemetry, Datadog, Sentry) — eliminating the tedious work of implementing telemetry yourself.
 
-<img width="1274" height="770" alt="mcpcat-diagram" src="https://github.com/user-attachments/assets/0d640b09-67f3-49a5-9bd4-30aa453746b8" />
+<img alt="AgentCat architecture — the AgentCat SDK inside your MCP server sends analytics to your observability vendors and session replay to the AgentCat dashboard" src="docs/static/architecture.png" />
 
 ## Supported MCP SDKs
 
