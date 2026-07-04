@@ -2,53 +2,57 @@
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="docs/static/logo-dark.svg">
     <source media="(prefers-color-scheme: light)" srcset="docs/static/logo-light.svg">
-    <img alt="MCPcat Logo" src="docs/static/logo-light.svg" width="80%">
+    <img alt="AgentCat Logo" src="docs/static/logo-light.svg" width="80%">
   </picture>
 </div>
 <h3 align="center">
-    <a href="#why-use-mcpcat-">Features</a>
+    <a href="#why-use-agentcat-">Features</a>
     <span> · </span>
-    <a href="https://mcpcat.io">Website</a>
+    <a href="https://agentcat.com">Website</a>
+    <span> · </span>
+    <a href="https://docs.agentcat.com">Docs</a>
     <span> · </span>
     <a href="#free-for-open-source">Open Source</a>
     <span> · </span>
     <a href="https://discord.gg/n9qpyhzp2u">Discord</a>
 </h3>
 <p align="center">
-  <a href="https://badge.fury.io/py/mcpcat"><img src="https://badge.fury.io/py/mcpcat.svg" alt="PyPI version"></a>
-  <a href="https://pypi.org/project/mcpcat/"><img src="https://img.shields.io/pypi/dm/mcpcat.svg" alt="PyPI downloads"></a>
+  <a href="https://badge.fury.io/py/agentcat"><img src="https://badge.fury.io/py/agentcat.svg" alt="PyPI version"></a>
+  <a href="https://pypi.org/project/agentcat/"><img src="https://img.shields.io/pypi/dm/agentcat.svg" alt="PyPI downloads"></a>
   <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="License: MIT"></a>
-  <a href="https://badge.fury.io/js/mcpcat"><img src="https://badge.fury.io/js/mcpcat.svg" alt="npm version"></a>
-  <a href="https://www.npmjs.com/package/mcpcat"><img src="https://img.shields.io/npm/dm/mcpcat.svg" alt="npm downloads"></a>
+  <a href="https://badge.fury.io/js/agentcat"><img src="https://badge.fury.io/js/agentcat.svg" alt="npm version"></a>
+  <a href="https://www.npmjs.com/package/agentcat"><img src="https://img.shields.io/npm/dm/agentcat.svg" alt="npm downloads"></a>
 </p>
 
+> [!IMPORTANT]
+> **MCPcat is now AgentCat** 🐱 — same team, same product, new name. The old `mcpcat` packages keep working forever, but new features land in `agentcat`.
 
-MCPcat is an analytics platform for MCP server owners 🐱. It captures user intentions and behavior patterns to help you understand what AI users actually need from your tools — eliminating guesswork and accelerating product development all with one-line of code.
+AgentCat is an analytics platform for MCP server owners 🐱. It captures user intentions and behavior patterns to help you understand what AI users actually need from your tools — eliminating guesswork and accelerating product development all with one-line of code.
 
-🎉 MCPcat now offers open source support for existing observability platforms, like [OpenTelemetry](https://opentelemetry.io/), [Datadog](https://www.datadoghq.com/), and [Sentry](https://sentry.io/). Contribute or message us to add support for yours today 🎉
-
-```bash
-pip install mcpcat
-```
-Checkout the [Python SDK here](https://github.com/mcpcat/mcpcat-python-sdk).
+🎉 AgentCat now offers open source support for existing observability platforms, like [OpenTelemetry](https://opentelemetry.io/), [Datadog](https://www.datadoghq.com/), and [Sentry](https://sentry.io/). Contribute or message us to add support for yours today 🎉
 
 ```bash
-npm install mcpcat
+pip install agentcat
 ```
-Checkout the [Typescript SDK here](https://github.com/mcpcat/mcpcat-typescript-sdk).
+Checkout the [Python SDK here](https://github.com/agentcathq/agentcat-python-sdk).
+
+```bash
+npm install agentcat
+```
+Checkout the [TypeScript SDK here](https://github.com/agentcathq/agentcat-typescript-sdk).
 
 ```bash
 go get github.com/mcpcat/mcpcat-go-sdk
 ```
 Checkout the [Go SDK here](https://github.com/mcpcat/mcpcat-go-sdk).
 
-Create an account for free today at [mcpcat.io](https://mcpcat.io).
+Create an account for free today at [agentcat.com](https://agentcat.com).
 
-## Why use MCPcat? 🤔
+## Why use AgentCat? 🤔
 
-MCPcat helps developers and product owners build, improve, and monitor their MCP servers by capturing user analytics and tracing tool calls.
+AgentCat helps developers and product owners build, improve, and monitor their MCP servers by capturing user analytics and tracing tool calls.
 
-Use MCPcat for:
+Use AgentCat for:
 
 - **User session replay** 🎬. Follow alongside your users to understand why they're using your MCP servers, what functionality you're missing, and what clients they're coming from.
 - **Trace debugging** 🔍. See where your users are getting stuck, track and find when LLMs get confused by your API, and debug sessions across all deployments of your MCP server.
@@ -60,8 +64,8 @@ Use MCPcat for:
 
 | SDK | Version | Status |
 |-----|---------|--------|
-| 🟦 [TypeScript](https://github.com/mcpcat/mcpcat-typescript-sdk) | MCP v1.0.0+| ✅ Available |
-| 🐍 [Python](https://github.com/mcpcat/mcpcat-python-sdk) | MCP v1.2.0+| ✅ Available |
+| 🟦 [TypeScript](https://github.com/agentcathq/agentcat-typescript-sdk) | MCP v1.0.0+| ✅ Available |
+| 🐍 [Python](https://github.com/agentcathq/agentcat-python-sdk) | MCP v1.2.0+| ✅ Available |
 | 🐹 [Go](https://github.com/mcpcat/mcpcat-go-sdk) | mcp-go v0.44.0+ | ✅ Available |
 | ☕ Java | - | 🚧 Roadmap |
 
@@ -73,19 +77,19 @@ Use MCPcat for:
   | 🐕 [Datadog](https://www.datadoghq.com/) | v2.0.0+ | ✅ Available |
   | 🔍 [Sentry](https://sentry.io/) | v7.0.0+ | ✅ Available |
 
-Since MCPcat supports OpenTelemetry, check to see if your existing vendor or platform is already [supported](https://opentelemetry.io/ecosystem/vendors/)!
+Since AgentCat supports OpenTelemetry, check to see if your existing vendor or platform is already [supported](https://opentelemetry.io/ecosystem/vendors/)!
 
 ## Free for open source
 
-MCPcat is free for qualified open source projects. We believe in supporting the ecosystem that makes MCP possible. If you maintain an open source MCP server, you can access our full analytics platform at no cost.
+AgentCat is free for qualified open source projects. We believe in supporting the ecosystem that makes MCP possible. If you maintain an open source MCP server, you can access our full analytics platform at no cost.
 
-**How to apply**: Email hi@mcpcat.io with your repository link
+**How to apply**: Email hi@agentcat.com with your repository link
 
-_Already using MCPcat? We'll upgrade your account immediately._
+_Already using AgentCat? We'll upgrade your account immediately._
 
 ## Community Cats 🐱
 
-Meet the cats behind MCPcat! Add your cat to our community by submitting a PR with your cat's photo in the `docs/cats/` directory.
+Meet the cats behind AgentCat! Add your cat to our community by submitting a PR with your cat's photo in the `docs/cats/` directory.
 
 <div align="left">
   <img src="docs/cats/bibi.png" alt="bibi" width="80" height="80">
