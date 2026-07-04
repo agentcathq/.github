@@ -38,9 +38,9 @@ npm install agentcat
 Checkout the [TypeScript SDK here](https://github.com/agentcathq/agentcat-typescript-sdk).
 
 ```bash
-go get github.com/mcpcat/mcpcat-go-sdk
+go get go.agentcat.com/sdk/mcpgo
 ```
-Checkout the [Go SDK here](https://github.com/mcpcat/mcpcat-go-sdk).
+Checkout the [Go SDK here](https://github.com/agentcathq/agentcat-go-sdk) — supports [mcp-go](https://github.com/mark3labs/mcp-go) and the official [go-sdk](https://github.com/modelcontextprotocol/go-sdk) (`go get go.agentcat.com/sdk/officialsdk`).
 
 Create an account for free today at [agentcat.com](https://agentcat.com).
 
@@ -62,7 +62,7 @@ Use AgentCat for:
 |-----|---------|--------|
 | 🟦 [TypeScript](https://github.com/agentcathq/agentcat-typescript-sdk) | MCP v1.0.0+| ✅ Available |
 | 🐍 [Python](https://github.com/agentcathq/agentcat-python-sdk) | MCP v1.2.0+| ✅ Available |
-| 🐹 [Go](https://github.com/mcpcat/mcpcat-go-sdk) | mcp-go v0.44.0+ | ✅ Available |
+| 🐹 [Go](https://github.com/agentcathq/agentcat-go-sdk) | mcp-go v0.44.1+ · go-sdk v1.4.1+ | ✅ Available |
 | ☕ Java | - | 🚧 Roadmap |
 
 ## Supported Observability Platforms
