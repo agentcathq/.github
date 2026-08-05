@@ -27,7 +27,9 @@ critical/high or production-scope alerts.
 ## 4. Security-manager team
     gh api orgs/agentcathq/teams/security --silent 2>/dev/null || \
       gh api -X POST orgs/agentcathq/teams -f name=security -f privacy=closed
-    gh api -X PUT orgs/agentcathq/security-managers/teams/security
+    ROLE_ID=$(gh api orgs/agentcathq/organization-roles \
+      --jq '.roles[] | select(.name=="security_manager") | .id')
+    gh api -X PUT "orgs/agentcathq/organization-roles/teams/security/$ROLE_ID"
 [HUMAN] Add the people responsible for triage to the `security` team.
 
 ## 5. Org ruleset (require PR, block force pushes, 11 repos)
@@ -39,10 +41,13 @@ enable "Delegated alert dismissal" so dismissals require a reviewer.
 Skip if the team is too small for two-person dismissal today; revisit at audit prep.
 
 ## 7. [HUMAN] Secrets for the alert router (on agentcathq/.github)
-- Fine-grained PAT: Settings → Developer settings → PATs → New:
-  Resource owner agentcathq, Organization permissions → "Dependabot alerts: Read-only",
-  no repo permissions, 366-day expiry. Add as Actions secret
-  `DEPENDABOT_ALERTS_READ_TOKEN` on agentcathq/.github.
+- Fine-grained PAT: Settings → Developer settings → Personal access tokens →
+  Fine-grained tokens → New: Resource owner agentcathq; Repository access:
+  All repositories; Repository permissions → "Dependabot alerts: Read-only"
+  (Metadata: Read-only is added automatically); no Organization permissions;
+  366-day expiry. The token owner must be an org owner or security manager
+  (see section 4). Add as Actions secret `DEPENDABOT_ALERTS_READ_TOKEN` on
+  agentcathq/.github.
 - Slack: create an Incoming Webhook for the security channel; add as Actions
   secret `SECURITY_SLACK_WEBHOOK_URL` on agentcathq/.github.
   Set a calendar reminder for PAT rotation.
