@@ -19,25 +19,25 @@ Roll out Dependabot across the agentcathq organization so that:
 | Compliance platform | Vanta (GitHub integration handles SLA tracking + evidence) |
 | Critical-alert flagging | Buy GitHub Code Security ($30/active-committer/mo, metered) for enforced org auto-triage rules + security overview; plus Slack routing workflow |
 | Update scope | Security updates + scheduled version updates on all active repos |
-| Repo scope | 12 active repos with CI; 6 repos excluded (documented in policy) |
+| Repo scope | 11 active repos with CI; 6 repos excluded (documented in policy) |
 | Remediation SLAs | Critical 3d / High 14d / Medium 60d / Low 90d |
 | Architecture | Central reusable workflow in `.github` repo + thin per-repo callers |
 | Merge method | Squash, via `gh pr merge --auto` (merges only when required checks pass) |
 
 ## Repo scope
 
-**In scope (12):** agentcat-ui, agentcat-server, agentcat-mcp, agentcat-go-sdk, agentcat-python-sdk, agentcat-typescript-sdk, webmcp-react, webmcp-gallery, mcpcat-go-sdk, reddit-monitor, lemlist-attio-sync, and any future repo created with the org security configuration as default.
+**In scope (11):** agentcat-ui, agentcat-server, agentcat-mcp, agentcat-go-sdk, agentcat-python-sdk, agentcat-typescript-sdk, webmcp-react, webmcp-gallery, mcpcat-go-sdk, reddit-monitor, lemlist-attio-sync, and any future repo created with the org security configuration as default.
 
 **Excluded (6, documented in the vulnerability management policy):** skills, mcp-event-tracker, mcp-audit, mcpcat-go-api, agentcat-go-api, .github. Rationale: no CI (auto-merge would land untested changes) and little/no dependency surface. `mcpcat` is an empty repo and out of scope entirely. Exclusions must appear in the policy — silent exclusions become audit findings.
 
 ## Section 1 — Org-level settings (GitHub UI/API, no files)
 
 1. **Purchase GitHub Code Security** (metered billing, $30/active-committer/month).
-2. **Org security configuration:** enable dependency graph, Dependabot alerts, and grouped security updates; apply to the 12 in-scope repos; set as default for new repos.
+2. **Org security configuration:** enable dependency graph, Dependabot alerts, and grouped security updates; apply to the 11 in-scope repos; set as default for new repos.
 3. **Enforced org-level auto-triage rules** (Code Security feature): GitHub's "dismiss low impact" preset for low-severity development-scope noise only. No rule may auto-dismiss critical/high or production-scope alerts. Rules set to *enforced* (repo admins cannot opt out) — the stronger Type II control.
 4. **Security-manager team:** assign a team the org `security manager` role — documented triage ownership (CC7.2 evidence) without org admin.
-5. **Org ruleset** (available on Team plan) on default branches of the 12 repos: require a pull request before merging; block force pushes. Required *status checks* are configured per-repo (CI job names differ across repos).
-6. **Vanta configuration:** set SLA windows Critical 3d / High 14d / Medium 60d / Low 90d; verify the GitHub integration ingests all 12 repos' Dependabot data. SLA clock starts at first-detection timestamp.
+5. **Org ruleset** (available on Team plan) on default branches of the 11 repos: require a pull request before merging; block force pushes. Required *status checks* are configured per-repo (CI job names differ across repos).
+6. **Vanta configuration:** set SLA windows Critical 3d / High 14d / Medium 60d / Low 90d; verify the GitHub integration ingests all 11 repos' Dependabot data. SLA clock starts at first-detection timestamp.
 7. **Policy artifacts (stored in Vanta):**
    - Vulnerability management policy: severity tiers, the SLA windows above, triage ownership (security-manager team), Dependabot as the scanning tool, dismissal process (documented reason + comment required on every dismissal), and the 6-repo exclusion list with rationale.
    - Change management "pre-authorized standard changes" clause: Dependabot PRs limited to semver-patch/semver-minor that pass all required CI checks are pre-authorized to merge automatically; semver-major and critical-severity security PRs require human review (CC8.1 carve-out).
@@ -64,7 +64,7 @@ All security-sensitive logic lives here, once:
 - Fails loudly: a workflow-failure notification also goes to Slack, so a broken router cannot fail silently for weeks.
 - Secrets (Actions secrets on this repo; the router is schedule-triggered, so the Dependabot-secrets caveat does not apply): a read-only fine-grained PAT with org Dependabot-alerts read scope, and a Slack incoming-webhook URL.
 
-## Section 3 — Per-repo rollout (12 repos)
+## Section 3 — Per-repo rollout (11 repos)
 
 Each in-scope repo receives one PR adding two files:
 
@@ -108,7 +108,7 @@ Each in-scope repo receives one PR adding two files:
 2. A semver-major PR stays open with the `major-update` label.
 3. A critical security PR (when one occurs, or simulated via a test repo with a known-vulnerable pin) stays open with `security-critical` and appears in Slack within 6 hours.
 4. Slack router dry-run: temporarily widen the severity filter to confirm end-to-end delivery, then restore.
-5. Vanta shows Dependabot findings from all 12 repos and applies the 3/14/60/90 SLAs.
+5. Vanta shows Dependabot findings from all 11 repos and applies the 3/14/60/90 SLAs.
 6. Sample one auto-merged PR's timeline and confirm the full evidence chain: Dependabot author → bot approval → passing required checks → auto-merge event.
 
 ## Evidence model (Type II observation window)
