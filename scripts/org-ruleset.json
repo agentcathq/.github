@@ -1,0 +1,24 @@
+{
+  "name": "default-branch-pr-required",
+  "target": "branch",
+  "enforcement": "active",
+  "conditions": {
+    "ref_name": {"include": ["~DEFAULT_BRANCH"], "exclude": []},
+    "repository_name": {
+      "include": ["agentcat-ui", "agentcat-server", "agentcat-mcp", "agentcat-go-sdk",
+                  "agentcat-python-sdk", "agentcat-typescript-sdk", "webmcp-react",
+                  "webmcp-gallery", "mcpcat-go-sdk", "reddit-monitor", "lemlist-attio-sync"],
+      "exclude": []
+    }
+  },
+  "rules": [
+    {"type": "pull_request",
+     "parameters": {"required_approving_review_count": 0,
+                    "dismiss_stale_reviews_on_push": false,
+                    "require_code_owner_review": false,
+                    "require_last_push_approval": false,
+                    "required_review_thread_resolution": false}},
+    {"type": "non_fast_forward"},
+    {"type": "deletion"}
+  ]
+}
