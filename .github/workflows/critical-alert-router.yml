@@ -32,9 +32,10 @@ jobs:
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SECURITY_SLACK_WEBHOOK_URL }}
           SLA_DAYS: '3'
+          SEVERITY: ${{ inputs.severity || 'critical' }}
         run: |
-          jq --arg sla "$SLA_DAYS" -r '
-            "🚨 *\(length) open critical Dependabot alert(s)* (SLA: \($sla) days)\n" +
+          jq --arg sla "$SLA_DAYS" --arg sev "$SEVERITY" -r '
+            "🚨 *\(length) open \($sev) Dependabot alert(s)* (SLA: \($sla) days)\n" +
             (map(
               "• <\(.html_url)|\(.repository.full_name): \(.dependency.package.name)> — " +
               "\(.security_advisory.severity) (CVSS \(.security_advisory.cvss.score // "n/a")) — " +
