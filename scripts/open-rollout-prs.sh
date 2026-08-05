@@ -4,39 +4,33 @@
 # from build/<repo>/. Requires: generate-configs.sh already run.
 set -euo pipefail
 cd "$(dirname "$0")/.."
+ROOT=$(pwd)
 WORK=$(mktemp -d)
 trap 'rm -rf "$WORK"' EXIT
 
 rollout_repo() {
-  local name="$1"
-
-  # Skip if rollout PR already open
+  local name=$1
   if [ -n "$(gh pr list --repo "agentcathq/$name" --head chore/dependabot-rollout --state open --json number --jq '.[].number')" ]; then
     echo "skip: $name (rollout PR already open)"
     return 0
   fi
-
-  # Clone and work in temp directory (use subshell to avoid cd back)
+  git clone --depth 1 "https://github.com/agentcathq/$name.git" "$WORK/$name" || return 1
   (
-    set -e
-    git clone --depth 1 "https://github.com/agentcathq/$name.git" "$WORK/$name"
-    cd "$WORK/$name"
-    git checkout -b chore/dependabot-rollout
-    mkdir -p .github/workflows
-    cp "$OLDPWD/build/$name/dependabot.yml" .github/dependabot.yml
-    cp "$OLDPWD/build/$name/dependabot-auto-merge.yml" .github/workflows/dependabot-auto-merge.yml
-    git add .github
+    cd "$WORK/$name" || exit 1
+    git checkout -b chore/dependabot-rollout || exit 1
+    mkdir -p .github/workflows || exit 1
+    cp "$ROOT/build/$name/dependabot.yml" .github/dependabot.yml || exit 1
+    cp "$ROOT/build/$name/dependabot-auto-merge.yml" .github/workflows/dependabot-auto-merge.yml || exit 1
+    git add .github || exit 1
     git commit -m "chore: enable Dependabot with org auto-merge policy
 
 Weekly grouped version updates (7d cooldown), security updates via org config.
 Patch/minor auto-merge behind CI per the org standard-changes policy;
-majors and critical security updates require human review."
-    git push -u origin chore/dependabot-rollout
-    gh pr create --repo "agentcathq/$name" \
-      --title "chore: enable Dependabot with org auto-merge policy" \
-      --body "Rollout per agentcathq/.github docs/superpowers/specs/2026-08-05-dependabot-soc2-design.md.
+majors and critical security updates require human review." || exit 1
+    git push -u origin chore/dependabot-rollout || exit 1
+    gh pr create --repo "agentcathq/$name" --title "chore: enable Dependabot with org auto-merge policy" --body "Rollout per agentcathq/.github docs/superpowers/specs/2026-08-05-dependabot-soc2-design.md.
 
-🤖 Generated with [Claude Code](https://claude.com/claude-code)"
+🤖 Generated with [Claude Code](https://claude.com/claude-code)" || exit 1
   ) || return 1
 }
 
