@@ -6,6 +6,7 @@ cd "$(dirname "$0")/.."
 
 jq -c '.repos[]' scripts/repos.json | while read -r repo; do
   name=$(jq -r .name <<<"$repo")
+  checks=$(jq -c '.required_checks' <<<"$repo")
   mkdir -p "build/$name"
 
   {
@@ -35,7 +36,8 @@ EOF
     done
   } > "build/$name/dependabot.yml"
 
-  cat > "build/$name/dependabot-auto-merge.yml" <<'EOF'
+  if [ "$checks" != "[]" ]; then
+    cat > "build/$name/dependabot-auto-merge.yml" <<'EOF'
 name: Dependabot auto-merge
 
 on: pull_request
@@ -49,6 +51,8 @@ jobs:
     if: github.event.pull_request.user.login == 'dependabot[bot]'
     uses: agentcathq/.github/.github/workflows/dependabot-auto-merge.yml@main
 EOF
-
-  echo "generated: $name"
+    echo "generated: $name"
+  else
+    echo "generated: $name (no caller — no required checks)"
+  fi
 done

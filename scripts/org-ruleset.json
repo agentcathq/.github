@@ -7,7 +7,8 @@
     "repository_name": {
       "include": ["agentcat-ui", "agentcat-server", "agentcat-mcp", "agentcat-go-sdk",
                   "agentcat-python-sdk", "agentcat-typescript-sdk", "webmcp-react",
-                  "webmcp-gallery", "mcpcat-go-sdk", "reddit-monitor", "lemlist-attio-sync"],
+                  "webmcp-gallery", "mcpcat-go-sdk", "reddit-monitor", "lemlist-attio-sync",
+                  ".github"],
       "exclude": []
     }
   },

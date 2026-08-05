@@ -20,13 +20,15 @@ rollout_repo() {
     git checkout -b chore/dependabot-rollout || exit 1
     mkdir -p .github/workflows || exit 1
     cp "$ROOT/build/$name/dependabot.yml" .github/dependabot.yml || exit 1
-    cp "$ROOT/build/$name/dependabot-auto-merge.yml" .github/workflows/dependabot-auto-merge.yml || exit 1
+    if [ -f "$ROOT/build/$name/dependabot-auto-merge.yml" ]; then
+      cp "$ROOT/build/$name/dependabot-auto-merge.yml" .github/workflows/dependabot-auto-merge.yml || exit 1
+    fi
     git add .github || exit 1
     git commit -m "chore: enable Dependabot with org auto-merge policy
 
 Weekly grouped version updates (7d cooldown), security updates via org config.
-Patch/minor auto-merge behind CI per the org standard-changes policy;
-majors and critical security updates require human review." || exit 1
+Patch/minor auto-merge behind CI per the org standard-changes policy where CI
+gating exists; majors and critical security updates require human review." || exit 1
     git push -u origin chore/dependabot-rollout || exit 1
     gh pr create --repo "agentcathq/$name" --title "chore: enable Dependabot with org auto-merge policy" --body "Rollout per agentcathq/.github docs/superpowers/specs/2026-08-05-dependabot-soc2-design.md.
 

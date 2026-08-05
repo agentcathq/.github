@@ -8,6 +8,10 @@
 set -euo pipefail
 cd "$(dirname "$0")/.."
 DRY=${1:-}
+if [ -n "$DRY" ] && [ "$DRY" != "--dry-run" ]; then
+  echo "usage: $0 [--dry-run]" >&2
+  exit 2
+fi
 
 run() { if [ "$DRY" = "--dry-run" ]; then echo "DRY: $*"; else "$@"; fi; }
 
@@ -17,7 +21,9 @@ jq -c '.repos[]' scripts/repos.json | while read -r repo; do
   checks=$(jq -c '.required_checks' <<<"$repo")
   echo "=== $name ==="
 
-  run gh api -X PATCH "repos/agentcathq/$name" -F allow_auto_merge=true --silent
+  if [ "$checks" != "[]" ]; then
+    run gh api -X PATCH "repos/agentcathq/$name" -F allow_auto_merge=true --silent
+  fi
 
   run gh label create security-critical --repo "agentcathq/$name" \
     --color B60205 --description "Critical-severity security update - human review required" --force
@@ -39,7 +45,7 @@ jq -c '.repos[]' scripts/repos.json | while read -r repo; do
       gh api -X PUT "repos/agentcathq/$name/branches/$branch/protection" --input - <<<"$body" --silent
     fi
   else
-    echo "WARN: $name has no required_checks - auto-merge would be ungated. Fix repos.json first."
+    echo "WARN: $name has no required_checks - auto-merge would be ungated. Fix repos.json first. Auto-merge was NOT enabled, pending CI."
   fi
 
   for path in CODEOWNERS .github/CODEOWNERS docs/CODEOWNERS; do

@@ -19,7 +19,7 @@ Roll out Dependabot across the agentcathq organization so that:
 | Compliance platform | Vanta (GitHub integration handles SLA tracking + evidence) |
 | Critical-alert flagging | Buy GitHub Code Security ($30/active-committer/mo, metered) for enforced org auto-triage rules + security overview; plus Slack routing workflow |
 | Update scope | Security updates + scheduled version updates on all active repos |
-| Repo scope | 11 active repos with CI; 6 repos excluded (documented in policy) |
+| Repo scope | 11 active repos with CI; 7 repos excluded (documented in policy) |
 | Remediation SLAs | Critical 3d / High 14d / Medium 60d / Low 90d |
 | Architecture | Central reusable workflow in `.github` repo + thin per-repo callers |
 | Merge method | Squash, via `gh pr merge --auto` (merges only when required checks pass) |
@@ -28,7 +28,7 @@ Roll out Dependabot across the agentcathq organization so that:
 
 **In scope (11):** agentcat-ui, agentcat-server, agentcat-mcp, agentcat-go-sdk, agentcat-python-sdk, agentcat-typescript-sdk, webmcp-react, webmcp-gallery, mcpcat-go-sdk, reddit-monitor, lemlist-attio-sync, and any future repo created with the org security configuration as default.
 
-**Excluded (6, documented in the vulnerability management policy):** skills, mcp-event-tracker, mcp-audit, mcpcat-go-api, agentcat-go-api, .github. Rationale: no CI (auto-merge would land untested changes) and little/no dependency surface. `mcpcat` is an empty repo and out of scope entirely. Exclusions must appear in the policy — silent exclusions become audit findings.
+**Excluded (7, documented in the vulnerability management policy):** skills, mcp-event-tracker, mcp-audit, mcpcat-go-api, agentcat-go-api, .github, and mcpcat (empty repo, out of scope entirely). Rationale: no CI (auto-merge would land untested changes) and little/no dependency surface. Exclusions must appear in the policy — silent exclusions become audit findings.
 
 ## Section 1 — Org-level settings (GitHub UI/API, no files)
 

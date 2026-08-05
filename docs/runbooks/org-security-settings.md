@@ -51,9 +51,22 @@ Skip if the team is too small for two-person dismissal today; revisit at audit p
 - Slack: create an Incoming Webhook for the security channel; add as Actions
   secret `SECURITY_SLACK_WEBHOOK_URL` on agentcathq/.github.
   Set a calendar reminder for PAT rotation.
+- Note: GitHub auto-disables scheduled workflows after ~60 days without repo
+  activity; the router lives in the low-traffic `.github` repo — if GitHub
+  emails a disable warning, re-enable it from the Actions tab. Vanta SLA
+  aging remains the backstop if the schedule lapses.
 
 ## 8. [HUMAN] Vanta
 - Vulnerability SLAs: Critical 3 / High 14 / Medium 60 / Low 90 days.
 - Confirm the GitHub integration lists all 11 in-scope repos and is ingesting
   Dependabot alerts (Vanta → Integrations → GitHub → resources).
 - Upload the two policy documents from docs/policies/ (see Task 6).
+
+## 9. Repos without PR-gating CI
+Repos whose `required_checks` is empty in scripts/repos.json (currently
+agentcat-ui, reddit-monitor, lemlist-attio-sync) receive Dependabot updates
+but NO auto-merge: no caller workflow is generated for them, and
+`allow_auto_merge` is left off. To enable later: add PR-triggered CI to the
+repo, set its `required_checks` in scripts/repos.json, rerun
+`scripts/configure-repo-settings.sh` and `scripts/generate-configs.sh`, and
+add the caller workflow via a PR.
