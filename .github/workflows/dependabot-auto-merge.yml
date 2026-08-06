@@ -1,0 +1,51 @@
+name: Dependabot auto-merge (reusable)
+
+on:
+  workflow_call: {}
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  dependabot-auto-merge:
+    runs-on: ubuntu-latest
+    # Identity gate: pull_request.user.login, never github.actor —
+    # actor is spoofable on attacker content via "@dependabot recreate".
+    if: >-
+      github.repository_owner == 'agentcathq' &&
+      github.event_name == 'pull_request' &&
+      github.event.pull_request.user.login == 'dependabot[bot]'
+    steps:
+      - name: Fetch Dependabot metadata
+        id: metadata
+        uses: dependabot/fetch-metadata@25dd0e34f4fe68f24cc83900b1fe3fe149efef98 # v3.1.0
+        with:
+          alert-lookup: true
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Label critical security update for human review
+        if: steps.metadata.outputs.alert-state != '' && steps.metadata.outputs.cvss >= 9.0
+        env:
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh pr edit "$PR_URL" --add-label security-critical
+
+      - name: Label major update for human review
+        if: steps.metadata.outputs.update-type == 'version-update:semver-major'
+        env:
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh pr edit "$PR_URL" --add-label major-update
+
+      - name: Approve and enable auto-merge (patch/minor, non-critical only)
+        if: >-
+          (steps.metadata.outputs.update-type == 'version-update:semver-patch' ||
+           steps.metadata.outputs.update-type == 'version-update:semver-minor') &&
+          !(steps.metadata.outputs.alert-state != '' && steps.metadata.outputs.cvss >= 9.0)
+        env:
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh pr review --approve "$PR_URL"
+          gh pr merge --auto --squash "$PR_URL"
