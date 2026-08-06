@@ -30,9 +30,7 @@ Weekly grouped version updates (7d cooldown), security updates via org config.
 Patch/minor auto-merge behind CI per the org standard-changes policy where CI
 gating exists; majors and critical security updates require human review." || exit 1
     git push -u origin chore/dependabot-rollout || exit 1
-    gh pr create --repo "agentcathq/$name" --title "chore: enable Dependabot with org auto-merge policy" --body "Rollout per agentcathq/.github docs/superpowers/specs/2026-08-05-dependabot-soc2-design.md.
-
-🤖 Generated with [Claude Code](https://claude.com/claude-code)" || exit 1
+    gh pr create --repo "agentcathq/$name" --title "chore: enable Dependabot with org auto-merge policy" --body "Rollout per agentcathq/.github docs/superpowers/specs/2026-08-05-dependabot-soc2-design.md." || exit 1
   ) || return 1
 }
 
