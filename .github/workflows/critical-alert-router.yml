@@ -24,7 +24,7 @@ jobs:
         run: |
           gh api --paginate \
             "/orgs/agentcathq/dependabot/alerts?severity=${SEVERITY}&state=open&per_page=100" \
-            --jq '.' | jq -s 'add // []' > alerts.json
+            --jq '.' | jq -s 'add // [] | map(select(.repository.fork != true))' > alerts.json
           echo "count=$(jq length alerts.json)" >> "$GITHUB_OUTPUT"
 
       - name: Post alerts to Slack
