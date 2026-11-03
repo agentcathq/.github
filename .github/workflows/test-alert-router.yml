@@ -1,4 +1,4 @@
-name: Test Dependabot alert router
+name: Test alert routers
 
 on:
   pull_request:
